@@ -1,11 +1,12 @@
 const express = require("express");
 const cors = require("cors");
+require('dotenv').config();
 
 const mongoose = require("mongoose");
 mongoose.set('strictQuery', false)
 
 const app = express();
-const dbConfig = require("./app/config/config");
+// const dbConfig = require("./app/config/config");
 var corsOptions = {
   origin: "*"
 };
@@ -19,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose
-  .connect(dbConfig.url, {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
