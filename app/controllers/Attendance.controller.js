@@ -88,7 +88,7 @@ exports.create = async (req, res) => {
 
 exports.find = async (req, res) => {
     let student_id = req.params.student_id;
-    let subject_name = req.body.subject_name;
+    let subject_name = req.query.subject_name;
     let sort_by = "date";
     let sort_order = -1;
 
@@ -111,8 +111,8 @@ exports.find = async (req, res) => {
                         query["subject_name"] = subject_name;
                     }
 
-                    start_date = req.body.start_date;
-                    end_date = req.body.end_date;
+                    start_date = req.query.start_date;
+                    end_date = req.query.end_date;
                     let new_date = new Date();
                     console.log(new_date);
                     let start_iso_date = new Date(new_date.getFullYear()-1, new_date.getMonth(), new_date.getDate());
@@ -129,8 +129,8 @@ exports.find = async (req, res) => {
 
                     query["date"] = {"$gte": start_iso_date, "$lte": end_iso_date};
 
-                    if (req.body.status) {
-                        query["status"] = req.body.status;
+                    if (req.query.status) {
+                        query["status"] = req.query.status;
                     }
 
                     meta_data = util.paginate(req.query.page, req.query.per_page);
@@ -153,7 +153,7 @@ exports.find = async (req, res) => {
                         })
 
                 } else {
-                    res.status(400).send({message:"Subject_id must be present."})
+                    res.status(400).send({message:"subject_name must be present."})
                 }
             } else {
                 res.status(404).send({message: "student with the given id does not exist."})
